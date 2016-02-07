@@ -1,0 +1,23 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "OceanInternet",
+    "enableMultiJS": true,
+    "longName": "C Race Timer",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "C Race Timer",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "1f2492e6-bfee-43b0-abdb-0668f7cd86cc",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
