@@ -1,14 +1,45 @@
 {
     "appKeys": {},
     "capabilities": [
-        "configurable"
+        ""
     ],
     "companyName": "OceanInternet",
     "enableMultiJS": true,
     "longName": "C Race Timer",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/square.png",
+                "name": "IMAGE_MENU_ICON_SQUARE",
+                "targetPlatforms": null,
+                "type": "png-trans"
+            },
+            {
+                "file": "images/check.png",
+                "name": "IMAGE_MENU_ICON_CHECK",
+                "targetPlatforms": null,
+                "type": "png-trans"
+            },
+            {
+                "file": "images/bell.png",
+                "name": "IMAGE_MENU_ICON_BELL",
+                "targetPlatforms": null,
+                "type": "png-trans"
+            },
+            {
+                "file": "images/flag.png",
+                "name": "IMAGE_MENU_ICON_FLAG",
+                "targetPlatforms": null,
+                "type": "png-trans"
+            },
+            {
+                "file": "images/clock.png",
+                "name": "IMAGE_MENU_ICON_CLOCK",
+                "targetPlatforms": null,
+                "type": "png-trans"
+            }
+        ]
     },
     "sdkVersion": "3",
     "shortName": "C Race Timer",
