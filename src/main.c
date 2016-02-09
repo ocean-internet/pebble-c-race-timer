@@ -31,7 +31,7 @@ static void deinit() {
 
 static void mainWindowLoad(Window *window) {
     
-    Layer     *windowLayer = window_get_root_layer(window); 
+    Layer *windowLayer = window_get_root_layer(window); 
     mainMenuInit(windowLayer, window);
     
     layer_add_child(windowLayer, menu_layer_get_layer(getMainMenuLayer()));
@@ -39,6 +39,5 @@ static void mainWindowLoad(Window *window) {
 
 static void mainWindowUnload(Window *window) {
     
-    menu_layer_destroy(getMainMenuLayer());
     mainMenuDeinit();
 }

@@ -1,5 +1,4 @@
 #include <pebble.h>
-#include <stdio.h>
 #include "menu/main-menu.h"
 
 static MenuLayer *s_menuLayer;
@@ -33,6 +32,9 @@ MenuLayer *getMainMenuLayer() {
 
 void mainMenuInit(Layer *windowLayer, Window *window) {
     
+    GRect bounds = layer_get_frame(windowLayer);
+    s_menuLayer  = menu_layer_create(bounds);
+    
     setIcons();
     setMenuItems();
     
@@ -43,11 +45,20 @@ void mainMenuInit(Layer *windowLayer, Window *window) {
 void mainMenuDeinit() {
     
     int numIcons = sizeof(s_menuIcons) / sizeof(s_menuIcons[0]);
+    int numItems = sizeof(s_mainMenu)  / sizeof(s_mainMenu[0]);
     
     // Cleanup the menu icons
     for (int i = 0; i < numIcons; i++) {
         gbitmap_destroy(s_menuIcons[i]);
     }
+    
+    // Cleanup the menu items
+    for (int i = 0; i < numItems; i++) {
+        free(s_mainMenu[i]);
+        s_mainMenu[i] = NULL;
+    }
+    
+    menu_layer_destroy(s_menuLayer);
 }
 
 static void setIcons() {
@@ -81,11 +92,6 @@ static void setMenuItems() {
 }
 
 static void setMenuLayer(Layer * windowLayer, Window *window) {
-    
-    GRect bounds       = layer_get_frame(windowLayer);
-    
-    // Create the menu layer
-    s_menuLayer = menu_layer_create(bounds);
     
     menu_layer_set_highlight_colors(s_menuLayer, GColorBabyBlueEyes, GColorBlack);
     
