@@ -11,33 +11,33 @@
         "media": [
             {
                 "file": "images/square.png",
-                "name": "IMAGE_MENU_ICON_SQUARE",
+                "name": "ICON_SQUARE",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/check.png",
-                "name": "IMAGE_MENU_ICON_CHECK",
+                "name": "ICON_CHECK",
                 "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/bell.png",
-                "name": "IMAGE_MENU_ICON_BELL",
-                "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/flag.png",
-                "name": "IMAGE_MENU_ICON_FLAG",
+                "name": "ICON_FLAG",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/clock.png",
-                "name": "IMAGE_MENU_ICON_CLOCK",
+                "name": "ICON_CLOCK",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
+            },
+            {
+                "file": "images/bell.png",
+                "name": "ICON_BELL",
+                "targetPlatforms": null,
+                "type": "bitmap"
             }
         ]
     },

@@ -52,9 +52,9 @@ void mainMenuDeinit() {
 
 static void setIcons() {
        
-    s_menuIcons[0] = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MENU_ICON_CLOCK_WHITE);
-    s_menuIcons[1] = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MENU_ICON_FLAG_WHITE);
-    s_menuIcons[2] = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MENU_ICON_BELL_WHITE);
+    s_menuIcons[0] = gbitmap_create_with_resource(RESOURCE_ID_ICON_CLOCK);
+    s_menuIcons[1] = gbitmap_create_with_resource(RESOURCE_ID_ICON_FLAG);
+    s_menuIcons[2] = gbitmap_create_with_resource(RESOURCE_ID_ICON_BELL);
 }
 
 static void setMenuItems() {
@@ -75,7 +75,9 @@ static void setMenuItems() {
     s_mainMenu[2]->icon     = s_menuIcons[2];
 
     s_mainMenu[3] = (menuItem *)malloc(sizeof(menuItem));
-    s_mainMenu[3]->title = "Credits";
+    s_mainMenu[3]->title    = "Credits";
+    s_mainMenu[3]->subtitle = NULL;
+    s_mainMenu[3]->icon     = NULL;
 }
 
 static void setMenuLayer(Layer * windowLayer, Window *window) {
@@ -84,6 +86,8 @@ static void setMenuLayer(Layer * windowLayer, Window *window) {
     
     // Create the menu layer
     s_menuLayer = menu_layer_create(bounds);
+    
+    menu_layer_set_highlight_colors(s_menuLayer, GColorBabyBlueEyes, GColorBlack);
     
     menu_layer_set_callbacks(s_menuLayer, NULL, (MenuLayerCallbacks){
         .get_num_sections  = menu_get_num_sections_callback,
