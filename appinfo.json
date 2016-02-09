@@ -12,8 +12,7 @@
             {
                 "file": "images/square.png",
                 "name": "IMAGE_MENU_ICON_SQUARE",
-                "targetPlatforms": null,
-                "type": "png-trans"
+                "targetPlatforms": null
             },
             {
                 "file": "images/check.png",
@@ -30,14 +29,12 @@
             {
                 "file": "images/flag.png",
                 "name": "IMAGE_MENU_ICON_FLAG",
-                "targetPlatforms": null,
-                "type": "png-trans"
+                "targetPlatforms": null
             },
             {
                 "file": "images/clock.png",
                 "name": "IMAGE_MENU_ICON_CLOCK",
-                "targetPlatforms": null,
-                "type": "png-trans"
+                "targetPlatforms": null
             }
         ]
     },
