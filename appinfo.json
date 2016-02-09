@@ -13,31 +13,31 @@
                 "file": "images/square.png",
                 "name": "IMAGE_MENU_ICON_SQUARE",
                 "targetPlatforms": null,
-                "type": "png-trans"
+                "type": "png"
             },
             {
                 "file": "images/check.png",
                 "name": "IMAGE_MENU_ICON_CHECK",
                 "targetPlatforms": null,
-                "type": "png-trans"
+                "type": "png"
             },
             {
                 "file": "images/bell.png",
                 "name": "IMAGE_MENU_ICON_BELL",
                 "targetPlatforms": null,
-                "type": "png-trans"
+                "type": "png"
             },
             {
                 "file": "images/flag.png",
                 "name": "IMAGE_MENU_ICON_FLAG",
                 "targetPlatforms": null,
-                "type": "png-trans"
+                "type": "png"
             },
             {
                 "file": "images/clock.png",
                 "name": "IMAGE_MENU_ICON_CLOCK",
                 "targetPlatforms": null,
-                "type": "png-trans"
+                "type": "png"
             }
         ]
     },
