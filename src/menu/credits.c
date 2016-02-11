@@ -1,5 +1,8 @@
 #include <pebble.h>
 #include "menu/credits.h"
+    
+static const int maxHeight   = 2000;
+static const int textPadding = 8;
 
 typedef struct {
     char  *text;
@@ -40,6 +43,9 @@ static void scrollLayerAddText(TextLayer *textLayer, text textItem);
 
 static GRect getWindowBounds();
 static GRect getMaxTextBounds();
+
+static int getWindowWidth();
+static int getWindowHeight();
 
 void showCredits() {
     
@@ -85,7 +91,7 @@ static void deleteWindowLayer() {
 
 static void createScrollLayer(Window *window) {
     
-    s_creditsScrollLayer = scroll_layer_create(getMaxTextBounds());
+    s_creditsScrollLayer = scroll_layer_create(GRect(0, 0, getWindowWidth(), getWindowHeight()));
     
     scroll_layer_set_click_config_onto_window(s_creditsScrollLayer, window);
 }
@@ -98,6 +104,9 @@ static void deleteScrollLayer() {
 }
 
 static void createTextLayers() {
+    
+    int width       = getWindowWidth();
+    int startHeight = 0;
     
     s_creditsCard = (card){
         .title = (text){
@@ -118,39 +127,46 @@ static void createTextLayers() {
         }
     };
     
-    s_titleLayer = text_layer_create(getMaxTextBounds());
+    s_titleLayer = text_layer_create(GRect(0, startHeight, width, maxHeight));
     scrollLayerAddText(s_titleLayer, s_creditsCard.title);
-
-    s_subtitleLayer = text_layer_create(getMaxTextBounds());
+    startHeight += (text_layer_get_content_size(s_titleLayer).h + textPadding/2);
+    
+    s_subtitleLayer = text_layer_create(GRect(0, startHeight, width, maxHeight));
     scrollLayerAddText(s_subtitleLayer, s_creditsCard.subtitle);
-
-    s_bodyLayer = text_layer_create(getMaxTextBounds());
+    startHeight += (text_layer_get_content_size(s_subtitleLayer).h + textPadding);
+    
+    s_bodyLayer = text_layer_create(GRect(0, startHeight, width, maxHeight));
     scrollLayerAddText(s_bodyLayer, s_creditsCard.body);
-
-    s_footerLayer = text_layer_create(getMaxTextBounds());
+    startHeight += (text_layer_get_content_size(s_bodyLayer).h + textPadding);
+    
+    s_footerLayer = text_layer_create(GRect(0, startHeight, width, maxHeight));
     scrollLayerAddText(s_footerLayer, s_creditsCard.footer);
+    startHeight += text_layer_get_content_size(s_footerLayer).h + textPadding/2;
+
+    scroll_layer_set_content_size(
+        s_creditsScrollLayer,
+        GSize(
+            width,
+            startHeight
+        )
+    );
+    
+    layer_add_child(s_creditsWindowLayer, scroll_layer_get_layer(s_creditsScrollLayer));
 }
 
 static void scrollLayerAddText(TextLayer *textLayer, text textItem) {
+    
+    int width = getWindowWidth();
+    GSize contentSize;
             
     text_layer_set_text(textLayer, textItem.text);
     text_layer_set_font(textLayer, textItem.font);
     
-    GSize maxSize = text_layer_get_content_size(textLayer);
+    contentSize = text_layer_get_content_size(textLayer);
     
-    text_layer_set_size(textLayer, maxSize);
-    
-    scroll_layer_set_content_size(
-        s_creditsScrollLayer,
-        GSize(
-            getWindowBounds().size.w,
-            scroll_layer_get_content_size(s_creditsScrollLayer).h + maxSize.h
-        )
-    );
+    text_layer_set_size(textLayer, GSize(width, contentSize.h));
     
     scroll_layer_add_child(s_creditsScrollLayer, text_layer_get_layer(textLayer));
-
-    layer_add_child(s_creditsWindowLayer, scroll_layer_get_layer(s_creditsScrollLayer));
 }
 
 static void deleteTextLayers() {
@@ -173,5 +189,15 @@ static GRect getWindowBounds() {
 
 static GRect getMaxTextBounds() {
     
-    return GRect(0, 0, getWindowBounds().size.w, 2000);
+    return GRect(0, 0, getWindowWidth(), maxHeight);
+}
+
+static int getWindowWidth() {
+    
+    return getWindowBounds().size.w;
+}
+
+static int getWindowHeight() {
+    
+    return getWindowBounds().size.h;
 }

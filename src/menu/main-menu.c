@@ -122,7 +122,6 @@ static void createMenuItems() {
     s_mainMenu[2]->icon     = s_menuIcons[2];
     s_mainMenu[2]->select   = &selectNotifications;
 
-
     s_mainMenu[3] = (menuItem *)malloc(sizeof(menuItem));
     s_mainMenu[3]->title    = "Credits";
     s_mainMenu[3]->subtitle = NULL;
