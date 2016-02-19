@@ -123,7 +123,7 @@ static void createTextLayers() {
         },
         .footer = (text){
             .text = "http://fontawesome.io\nhttp://creativecommons.org/licenses/by/3.0",
-            .font = fonts_get_system_font(FONT_KEY_GOTHIC_09)
+            .font = fonts_get_system_font(FONT_KEY_GOTHIC_14)
         }
     };
     
