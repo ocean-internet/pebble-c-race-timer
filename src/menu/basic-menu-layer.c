@@ -46,7 +46,6 @@ BasicMenuModel *basicMenuModelCreate(char *title) {
 void basicMenuModelDestroy(BasicMenuModel *model) {
   
     for (int i=0; i<model->itemCount; i++) {
-        gbitmap_destroy(model->items[i]->icon);
         free(model->items[i]);
     }
     free(model);
@@ -56,8 +55,8 @@ void basicMenuModelAddItem(
     BasicMenuModel *model,
     char           *title,
     char           *subtitle,
-    GBitmap        *icon,
-    BasicMenuSelectCallback callback
+    BasicMenuIconCallback   *icon,
+    BasicMenuSelectCallback *callback
 ) {
     
     BasicMenuItem *item = malloc(sizeof *item); 
@@ -123,7 +122,7 @@ static void drawRow(GContext* context, const Layer *cellLayer, MenuIndex *cellIn
     BasicMenuModel *model       = (BasicMenuModel*) data;
     BasicMenuItem  *currentItem = model->items[cellIndex->row];
             
-    menu_cell_basic_draw(context, cellLayer, currentItem->title, currentItem->subtitle, currentItem->icon);
+    menu_cell_basic_draw(context, cellLayer, currentItem->title, currentItem->subtitle, currentItem->icon(cellIndex->row));
 }
 
 static void selectClick(MenuLayer *menuLayer, MenuIndex *cellIndex, void *data) {

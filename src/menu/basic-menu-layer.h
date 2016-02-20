@@ -6,13 +6,14 @@ struct BasicMenuModel;
 
 typedef MenuLayer BasicMenuLayer;
 
-typedef void (*BasicMenuSelectCallback)();
+typedef void     BasicMenuSelectCallback();
+typedef GBitmap *BasicMenuIconCallback(int i);
 
 typedef struct BasicMenuItem {
     char    *title;
     char    *subtitle;
-    GBitmap *icon;
-    BasicMenuSelectCallback callback;
+    BasicMenuIconCallback   *icon;
+    BasicMenuSelectCallback *callback;
 } BasicMenuItem;
 
 typedef struct BasicMenuModel {
@@ -31,6 +32,6 @@ void basicMenuModelAddItem(
     BasicMenuModel *model,
     char *title,
     char *subtitle,
-    GBitmap *icon,
+    BasicMenuIconCallback   icon,
     BasicMenuSelectCallback callback
 );
