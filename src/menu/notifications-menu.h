@@ -9,4 +9,6 @@ typedef struct Notification {
 
 Notification Notifications[3];
 
+void initNotifications();
+
 void showNotificationsMenu();
