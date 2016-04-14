@@ -9,4 +9,6 @@ typedef struct Signal {
 
 Signal StartSignals[10];
 
+void initStartSignals();
+
 void showStartSignalsMenu();
