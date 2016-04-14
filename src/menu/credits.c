@@ -42,7 +42,6 @@ static void deleteTextLayers();
 static void scrollLayerAddText(TextLayer *textLayer, text textItem);
 
 static GRect getWindowBounds();
-static GRect getMaxTextBounds();
 
 static int getWindowWidth();
 static int getWindowHeight();
@@ -185,11 +184,6 @@ static void deleteTextLayers() {
 static GRect getWindowBounds() {
     
     return layer_get_frame(s_creditsWindowLayer);
-}
-
-static GRect getMaxTextBounds() {
-    
-    return GRect(0, 0, getWindowWidth(), maxHeight);
 }
 
 static int getWindowWidth() {

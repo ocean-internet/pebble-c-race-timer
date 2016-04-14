@@ -5,10 +5,93 @@
     ],
     "companyName": "OceanInternet",
     "enableMultiJS": true,
-    "longName": "C Race Timer",
+    "longName": "Sail Race Timer",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/Firefly.png",
+                "menuIcon": true,
+                "name": "IMAGE_FIREFLY",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "type": "bitmap"
+            },
+            {
+                "file": "images/pennant.one.png",
+                "name": "IMAGE_PENNANT_ONE",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "type": "bitmap"
+            },
+            {
+                "file": "images/flag.papa.png",
+                "name": "IMAGE_FLAG_PAPA",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "type": "bitmap"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "file": "fonts/bptypewrite.regular.otf",
+                "name": "FONT_TYPEWRITER_24",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "file": "fonts/bptypewrite.regular.otf",
+                "name": "FONT_TYPEWRITER_78",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "trackingAdjust": -12,
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "file": "fonts/bptypewrite.regular.otf",
+                "name": "FONT_TYPEWRITER_36",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "trackingAdjust": -10,
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "file": "fonts/bptypewrite.regular.otf",
+                "name": "FONT_TYPEWRITER_56",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "trackingAdjust": -10,
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "file": "fonts/Lekton-Bold.ttf",
+                "name": "FONT_LEKTON_BOLD_24",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "compatibility": "2.7",
+                "file": "fonts/Lekton-Bold.ttf",
+                "name": "FONT_LEKTON_BOLD_70",
+                "targetPlatforms": [
+                    "basalt"
+                ],
+                "type": "font"
+            },
             {
                 "file": "images/square.png",
                 "name": "ICON_SQUARE",
@@ -42,7 +125,7 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "C Race Timer",
+    "shortName": "Race Timer",
     "targetPlatforms": [
         "basalt"
     ],

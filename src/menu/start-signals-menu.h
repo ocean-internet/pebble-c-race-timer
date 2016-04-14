@@ -6,8 +6,8 @@
 typedef struct Signal {
     bool signal;    
     char *text;
-} Signal;
+} __attribute__((__packed__)) Signal;
 
-Signal StartSignals[11];
+Signal StartSignals[10];
 
 void showStartSignalsMenu();

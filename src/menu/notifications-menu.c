@@ -1,15 +1,13 @@
 #include <pebble.h>
 #include "menu/basic-menu-layer.h"
-#include "menu/main-menu.h"
-#include "race-timer.h"
-#include "menu/start-signals-menu.h"
 #include "menu/notifications-menu.h"
-#include "menu/credits.h"
+
+#define NOTIFICATIONS_KEY 11
 
 static Window          *s_menuWindow;
 static BasicMenuLayer  *s_menuLayer;
 static BasicMenuModel  *s_menuModel;
-static GBitmap         *s_icons[4];
+static GBitmap         *s_icons[2];
 
 static void load(  Window *window);
 static void unload(Window *window);
@@ -23,14 +21,11 @@ static void menuDestroy();
 static void iconsCreate();
 static void iconsDestroy();
 
-static void selectRaceTimer();
-static void selectStartSignals();
-static void selectNotifications();
-static void selectCredits();
+static GBitmap *getIcon(int index);
 
-GBitmap *getIcon(int i);
+static void  toggleNotification();
 
-void showMainMenu() {
+void showNotificationsMenu() {
     
     s_menuWindow = window_create();
         
@@ -42,7 +37,7 @@ void showMainMenu() {
     window_stack_push(s_menuWindow, true);
 }
 
-void hideMainMenu() {
+void hideNotificationsMenu() {
     
     window_stack_remove(s_menuWindow, true);
 }
@@ -85,79 +80,51 @@ static void layerDestroy() {
 
 static void menuCreate() {
     
-    s_menuModel = basicMenuModelCreate("Race Timer");
+    s_menuModel = basicMenuModelCreate("Notifications");
     
-    basicMenuModelAddItem(
-        s_menuModel,
-        "Race Timer",
-        "Start Race Timer",
-        *getIcon,
-        selectRaceTimer
-    );
+    persist_read_data(NOTIFICATIONS_KEY, &Notifications, sizeof(Notifications));
     
-    basicMenuModelAddItem(
-        s_menuModel,
-        "Start Signals",
-        "Configure start signals",
-        *getIcon,
-        selectStartSignals
-    );
+    int numberOfNotifications = sizeof(Notifications)/sizeof(Notifications[0]);
     
-    basicMenuModelAddItem(
-        s_menuModel,
-        "Notificaitions",
-        "Configure notifications",
-        *getIcon,
-        selectNotifications
-    );
+    for(int i=0; i<numberOfNotifications; i++) {
+        
+        basicMenuModelAddItem(
+            s_menuModel,
+            Notifications[i].label,
+            NULL,
+            *getIcon,
+            toggleNotification
+        );
+    }
+}
+
+static void iconsCreate() {
     
-    basicMenuModelAddItem(
-        s_menuModel,
-        "Credits",
-        NULL,
-        *getIcon,
-        selectCredits
-    );
+    s_icons[false] = gbitmap_create_with_resource(RESOURCE_ID_ICON_SQUARE);
+    s_icons[true]  = gbitmap_create_with_resource(RESOURCE_ID_ICON_CHECK);
+}
+
+static void iconsDestroy() {
+    
+    gbitmap_destroy(s_icons[false]);
+    gbitmap_destroy(s_icons[true]);
 }
 
 static void menuDestroy() {
+    
+    persist_write_data(NOTIFICATIONS_KEY, &Notifications, sizeof(Notifications));
     
     basicMenuModelDestroy(s_menuModel);
     s_menuModel = NULL;
 }
 
-static void iconsCreate() {
+static GBitmap *getIcon(int index) {
     
-    s_icons[0] = gbitmap_create_with_resource(RESOURCE_ID_ICON_CLOCK);
-    s_icons[1] = gbitmap_create_with_resource(RESOURCE_ID_ICON_FLAG);
-    s_icons[2] = gbitmap_create_with_resource(RESOURCE_ID_ICON_BELL);
+    return s_icons[Notifications[index].notification];
 }
 
-static void iconsDestroy() {
+static void toggleNotification(MenuLayer *menuLayer, MenuIndex *cellIndex, void *data) {
     
-    gbitmap_destroy(s_icons[0]);
-    gbitmap_destroy(s_icons[1]);
-    gbitmap_destroy(s_icons[2]);
-}
-
-GBitmap *getIcon(int i) {
-    
-    return s_icons[i];
-}
-
-static void selectRaceTimer() {
-    
-    showRaceTimer();
-}
-static void selectStartSignals() {
-    
-    showStartSignalsMenu();
-}
-static void selectNotifications() {
-    
-    showNotificationsMenu();
-}
-static void selectCredits() {
-
-    showCredits();
+    Notifications[cellIndex->row].notification = !(Notifications[cellIndex->row].notification);
+    menu_layer_reload_data(menuLayer);
 }
