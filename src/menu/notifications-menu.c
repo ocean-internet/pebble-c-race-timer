@@ -23,6 +23,18 @@ static GBitmap *getIcon(int index);
 
 static void  toggleNotification();
 
+void initNotifications() {
+    
+    if (!persist_exists(NOTIFICATIONS_KEY)) {
+        
+        Notifications[0]  = (Notification){ .notification = true, .label = " Vibrations"  };
+        Notifications[1]  = (Notification){ .notification = true, .label = " Start Flags" };
+        Notifications[2]  = (Notification){ .notification = true, .label = " Light"       };
+        
+        persist_write_data(NOTIFICATIONS_KEY, &Notifications, sizeof(Notifications));
+    }
+}
+
 void showNotificationsMenu() {
     
     s_menuWindow = window_create();
