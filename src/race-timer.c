@@ -1,26 +1,8 @@
-#include <pebble.h>
-#include "menu/start-signals-menu.h"
-#include "menu/notifications-menu.h"
 #include "race-timer.h"
-
-#define START_SIGNALS_KEY 10
-#define NOTIFICATIONS_KEY 11
-
-static const int vibrate = 0;
-static const int flags   = 1;
-static const int light   = 2;
-
-static const int papa = 0;
-static const int one  = 1;
-
-static GBitmap *s_flags[2];
 
 static Window    *s_raceTimerWindow;
 static TextLayer *s_timeLayer;
 static TextLayer *s_countdownLayer;
-
-static BitmapLayer *s_flagPapaLayer;
-static BitmapLayer *s_pennantOneLayer;
 
 static void load(  Window *window);
 static void unload(Window *window);
@@ -30,9 +12,6 @@ static void timeLayerDestroy();
 
 static void countdownLayerCreate();
 static void countdownLayerDestroy();
-
-static void flagsCreate();
-static void flagsDestroy();
 
 static void clickConfigProvider(Window *window);
 
@@ -49,10 +28,6 @@ static void drawTime();
 static int  getMaxTime();
 
 static void setStyle();
-
-static void doVibrate(int seconds);
-static void doFlags(int seconds);
-static void doLight(int seconds);
 
 bool timerRunning = false;
 
@@ -75,9 +50,6 @@ static uint32_t countdownFont;
 static int      countdownHeight;
 
 static AppTimer *milliTimer = NULL;
-
-static int papaFlagDown = 1;
-static int papaFlagUp   = 4;
 
 static void setStyle() {
     
@@ -119,7 +91,7 @@ static void bumpTimer() {
         resetCountdown();
         timerRunning = true;
         
-        layer_add_child(window_get_root_layer(s_raceTimerWindow), bitmap_layer_get_layer(s_pennantOneLayer));
+        showClassFlag(s_raceTimerWindow);
         
     } else if(seconds > 30) {
         
@@ -210,31 +182,6 @@ static void countdownLayerCreate() {
     layer_add_child(window_get_root_layer(s_raceTimerWindow), text_layer_get_layer(s_countdownLayer));
 }
 
-static void flagsCreate() {
-    
-    s_flags[papa] = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_FLAG_PAPA);
-    s_flags[one]  = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_PENNANT_ONE);
-    
-    s_flagPapaLayer   = bitmap_layer_create(GRect(32+48, 168-48, 48, 48));
-    s_pennantOneLayer = bitmap_layer_create(GRect(16, 168-48, 48, 48));
-    
-    bitmap_layer_set_bitmap(s_flagPapaLayer,   s_flags[papa]);
-    bitmap_layer_set_bitmap(s_pennantOneLayer, s_flags[one]);
-    
-    for(int i=1; i < 10; i++) {
-        
-        if(StartSignals[i].signal && papaFlagDown == 0) {
-            
-            papaFlagDown = i;
-        }
-        
-        if(StartSignals[i].signal && papaFlagUp < papaFlagDown) {
-            
-            papaFlagUp = i;
-        }
-    }
-}
-
 static void countdownLayerDestroy() {
     
     text_layer_destroy(s_countdownLayer);
@@ -245,15 +192,6 @@ static void timeLayerDestroy() {
     text_layer_destroy(s_timeLayer);
 }
 
-static void flagsDestroy() {
-    
-    gbitmap_destroy(s_flags[papa]);
-    gbitmap_destroy(s_flags[one]);
-    
-    bitmap_layer_destroy(s_flagPapaLayer);
-    bitmap_layer_destroy(s_pennantOneLayer);
-}
-
 static void resetCountdown() {
             
     minutes = getMaxTime();
@@ -261,8 +199,7 @@ static void resetCountdown() {
     
     drawCountdown();
     
-    layer_remove_from_parent(bitmap_layer_get_layer(s_pennantOneLayer));
-    layer_remove_from_parent(bitmap_layer_get_layer(s_flagPapaLayer));
+    hideFlags();
 }
 
 static void drawCountdown() {
@@ -272,9 +209,9 @@ static void drawCountdown() {
     
     if(StartSignals[minutes].signal) {
         
-        if(Notifications[vibrate].notification) doVibrate(seconds);
-        if(Notifications[flags].notification)   doFlags(seconds);
-        if(Notifications[light].notification)   doLight(seconds);
+        if(Notifications[VIBRATE].notification) doVibrate(seconds);
+        if(Notifications[FLAGS].notification)   doFlags(minutes, seconds, s_raceTimerWindow);
+        if(Notifications[LIGHT].notification)   doLight(seconds);
     }
 }
 
@@ -346,54 +283,4 @@ static void tock() {
     }
     
     drawCountdown();
-}
-
-static void doVibrate(int seconds) {
-    
-    if(seconds == 0) {
-        
-        vibes_long_pulse();
-        
-    } else if(seconds <= 5) {
-        
-        vibes_short_pulse();
-    
-    } else if(seconds <= 10) {
-        
-        vibes_double_pulse();
-    }
-}
-
-static void doFlags(int seconds) {
-    
-    if(seconds == 0) {
-        
-        if(minutes == 0) {
-            
-            layer_remove_from_parent(bitmap_layer_get_layer(s_pennantOneLayer));
-            layer_remove_from_parent(bitmap_layer_get_layer(s_flagPapaLayer));
-        
-        } else if(minutes == papaFlagDown) {
-            
-            layer_remove_from_parent(bitmap_layer_get_layer(s_flagPapaLayer));
-            
-        } else if(minutes == papaFlagUp) {
-            
-            layer_add_child(window_get_root_layer(s_raceTimerWindow), bitmap_layer_get_layer(s_flagPapaLayer));
-        
-        }
-    }
-}
-
-static void doLight(int seconds) {
-    
-    if(seconds == 0) {
-        
-        light_enable(false);
-        light_enable_interaction();
-        
-    } else if(seconds <= 10) {
-        
-        light_enable(true);   
-    }
 }

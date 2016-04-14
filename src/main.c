@@ -1,11 +1,7 @@
-#include <stdbool.h>
 #include <pebble.h>
+#include "main.h"
 #include "menu/main-menu.h"
-#include "menu/start-signals-menu.h"
 #include "menu/notifications-menu.h"
-
-#define START_SIGNALS_KEY 10
-#define NOTIFICATIONS_KEY 11
 
 void initStartSignals();
 void initNotifications();

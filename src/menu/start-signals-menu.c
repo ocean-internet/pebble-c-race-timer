@@ -2,8 +2,6 @@
 #include "menu/basic-menu-layer.h"
 #include "menu/start-signals-menu.h"
 
-#define START_SIGNALS_KEY 10
-
 static Window          *s_menuWindow;
 static BasicMenuLayer  *s_menuLayer;
 static BasicMenuModel  *s_menuModel;

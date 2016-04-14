@@ -2,8 +2,6 @@
 #include "menu/basic-menu-layer.h"
 #include "menu/notifications-menu.h"
 
-#define NOTIFICATIONS_KEY 11
-
 static Window          *s_menuWindow;
 static BasicMenuLayer  *s_menuLayer;
 static BasicMenuModel  *s_menuModel;

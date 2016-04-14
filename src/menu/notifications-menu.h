@@ -1,7 +1,6 @@
 #pragma once
 #include <pebble.h>
-
-#define  NOTIFICATIONS_KEY 11
+#include "main.h"
 
 typedef struct Notification {
     bool notification;    

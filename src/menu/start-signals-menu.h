@@ -1,7 +1,6 @@
 #pragma once
 #include <pebble.h>
-
-#define START_SIGNALS_KEY 10
+#include "main.h"
 
 typedef struct Signal {
     bool signal;    

@@ -6,6 +6,10 @@
 #include "menu/notifications-menu.h"
 #include "menu/credits.h"
 
+static const int clockIcon = 0;
+static const int flagIcon  = 1;
+static const int bellIcon  = 2;
+
 static Window          *s_menuWindow;
 static BasicMenuLayer  *s_menuLayer;
 static BasicMenuModel  *s_menuModel;
@@ -128,16 +132,16 @@ static void menuDestroy() {
 
 static void iconsCreate() {
     
-    s_icons[0] = gbitmap_create_with_resource(RESOURCE_ID_ICON_CLOCK);
-    s_icons[1] = gbitmap_create_with_resource(RESOURCE_ID_ICON_FLAG);
-    s_icons[2] = gbitmap_create_with_resource(RESOURCE_ID_ICON_BELL);
+    s_icons[clockIcon] = gbitmap_create_with_resource(RESOURCE_ID_ICON_CLOCK);
+    s_icons[flagIcon]  = gbitmap_create_with_resource(RESOURCE_ID_ICON_FLAG);
+    s_icons[bellIcon]  = gbitmap_create_with_resource(RESOURCE_ID_ICON_BELL);
 }
 
 static void iconsDestroy() {
     
-    gbitmap_destroy(s_icons[0]);
-    gbitmap_destroy(s_icons[1]);
-    gbitmap_destroy(s_icons[2]);
+    gbitmap_destroy(s_icons[clockIcon]);
+    gbitmap_destroy(s_icons[flagIcon]);
+    gbitmap_destroy(s_icons[bellIcon]);
 }
 
 GBitmap *getIcon(int i) {
